@@ -5,7 +5,7 @@ import * as firebase from 'firebase';
 import JoinMeeting from './JoinMeeting';
 import { orange } from './colors';
 import * as firebaseUtils from './firebaseUtils';
-import ThatsEnoughButton from './ThatsEnoughButton';
+import ThatsEnoughView from './ThatsEnoughView';
 
 const AppContainer = styled.div`
   display: flex;
@@ -55,8 +55,8 @@ class App extends Component {
     }
   }
 
-  renderThatsEnoughButton() {
-    return <ThatsEnoughButton meetingId={this.state.meetingId} />
+  renderThatsEnoughView() {
+    return <ThatsEnoughView meetingId={this.state.meetingId} />
   }
 
   render() {
@@ -66,7 +66,7 @@ class App extends Component {
         <AppBodyContainer>
           {
             this.state.meetingId
-              ? this.renderThatsEnoughButton()
+              ? this.renderThatsEnoughView()
               : this.renderJoinMeeting()
           }
         </AppBodyContainer>

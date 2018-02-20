@@ -29,7 +29,7 @@ const DownVoteSubmitted = styled.div`
     max-height: 223px;
 `;
 
-class ThatsEnoughButton extends Component {
+class ThatsEnoughView extends Component {
 
     state = {
         canDownVote: true,
@@ -51,8 +51,8 @@ class ThatsEnoughButton extends Component {
     }
 }
 
-ThatsEnoughButton.propTypes = {
+ThatsEnoughView.propTypes = {
     meetingId: PropTypes.string.isRequired,
 };
 
-export default ThatsEnoughButton;
+export default ThatsEnoughView;
