@@ -1,18 +1,39 @@
-export function incrementMeetingMemberCount(options) {
+export function incrementMemberCount(options) {
     updateMeeting({ ...options, meetingOperation: incrementMemberCountOperation });
 }
 
-export function decrementMeetingMemberCount(options) {
+export function decrementMemberCount(options) {
     updateMeeting({ ...options, meetingOperation: decrementMemberCountOperation });
 }
 
-export function resetMeetingDownVotes(options) {
+export function resetDownVotes(options) {
     updateMeeting({ ...options, meetingOperation: resetDownVotesOperation });
 }
 
-export function downVoteMeeting(options) {
+export function downVote(options) {
     updateMeeting({ ...options, meetingOperation: downVoteMeetingOperation });
 }
+
+export function createMeeting({
+    db,
+    meetingId,
+    onSuccess,
+    onFailure,
+}) {
+    const meetingsRef = db.ref('meetings');
+    meetingsRef.transaction(function(meetings) {
+        if (meetings) {
+            if (!meetings[meetingId]) {
+                meetings[meetingId] = {
+                    memberCount: 0,
+                    downVotes: 0,
+                };
+            }
+        }
+        return meetings;
+    }).then(onSuccess, onFailure);
+}
+
 
 function incrementMemberCountOperation(meeting) {
     if (meeting) {

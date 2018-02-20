@@ -44,17 +44,26 @@ class JoinMeeting extends Component {
         meetingId: null,
     };
 
+    db = firebase.database();
+
     handlemeetingIdChange = (e) => {
         this.setState({ meetingId: e.target.value });
     }
 
     handleSubmitClick = () => {
-        firebaseUtils.incrementMeetingMemberCount({
-            db: firebase.database(),
+        firebaseUtils.createMeeting({
+            db: this.db,
             meetingId: this.state.meetingId,
-            onSuccess: () => this.props.onMeetingJoined({ meetingId: this.state.meetingId }),
-            onFailure: () => console.log('failure'),
-        });
+            onFailure: console.log('failed to create meeting'),
+            onSuccess: () => {
+                firebaseUtils.incrementMemberCount({
+                    db: this.db,
+                    meetingId: this.state.meetingId,
+                    onSuccess: () => this.props.onMeetingJoined({ meetingId: this.state.meetingId }),
+                    onFailure: () => console.log('failed to increment member count'),
+                });
+            }
+        })
     }
 
     render() {

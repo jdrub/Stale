@@ -36,7 +36,7 @@ class ThatsEnoughButton extends Component {
     };
 
     handleClick = () => {
-        firebaseUtils.downVoteMeeting({
+        firebaseUtils.downVote({
             db: firebase.database(),
             meetingId: this.props.meetingId,
             onSuccess: () => this.setState({ canDownVote: false }),
