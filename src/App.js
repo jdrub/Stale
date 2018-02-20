@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import styled from 'styled-components';
+import { orange } from './colors';
 import * as firebase from 'firebase';
 import JoinMeeting from './JoinMeeting';
-import { orange } from './colors';
-import * as firebaseUtils from './firebaseUtils';
+import React, { Component } from 'react';
+import styled from 'styled-components';
 import ThatsEnoughView from './ThatsEnoughView';
 
 const AppContainer = styled.div`
@@ -29,12 +27,6 @@ const StyledHeader = styled.div`
 const AppBodyContainer = styled.div`
   flex-grow: 1;
   margin: 20px auto;
-`;
-
-const MeetingInputText = styled.div`
-  font-size: 1.5em;
-  color: black;
-  margin: 0 auto;
 `;
 
 class App extends Component {

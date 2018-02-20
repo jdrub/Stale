@@ -43,7 +43,7 @@ export function listenForDownVoteAlert({
     const meetingRef = db.ref(`meetings/${meetingId}`);
     meetingRef.on('value', (meetingSnapshot) => {
         const { downVotes, memberCount } = meetingSnapshot.val();
-        if (downVotes * 100 / memberCount > thresholdDownVotePercentage) {
+        if (downVotes * 100 / memberCount >= thresholdDownVotePercentage) {
             onAlert();
         }
     });

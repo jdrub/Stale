@@ -1,9 +1,9 @@
+import { orange } from './colors';
+import * as  firebaseUtils from './firebaseUtils.js';
+import * as firebase from 'firebase';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import * as firebase from 'firebase';
-import { orange } from './colors';
-import PropTypes from 'prop-types';
-import * as  firebaseUtils from './firebaseUtils.js';
 
 const InputContainer = styled.div`
  display: block;
