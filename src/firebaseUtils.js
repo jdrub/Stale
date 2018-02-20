@@ -34,6 +34,20 @@ export function createMeeting({
     }).then(onSuccess, onFailure);
 }
 
+export function listenForDownVoteAlert({
+    db,
+    meetingId,
+    thresholdDownVotePercentage,
+    onAlert,
+}) {
+    const meetingRef = db.ref(`meetings/${meetingId}`);
+    meetingRef.on('value', (meetingSnapshot) => {
+        const { downVotes, memberCount } = meetingSnapshot.val();
+        if (downVotes * 100 / memberCount > thresholdDownVotePercentage) {
+            onAlert();
+        }
+    });
+}
 
 function incrementMemberCountOperation(meeting) {
     if (meeting) {

@@ -27,6 +27,7 @@ const DownVoteSubmitted = styled.div`
     width: 90vw;
     max-width: 500px;
     max-height: 223px;
+    text-decoration: underline;
 `;
 
 class ThatsEnoughView extends Component {
@@ -35,9 +36,24 @@ class ThatsEnoughView extends Component {
         canDownVote: true,
     };
 
+    db = firebase.database();
+
+    componentDidMount() {
+        firebaseUtils.listenForDownVoteAlert({
+            db: this.db,
+            meetingId: this.props.meetingId,
+            thresholdDownVotePercentage: 50,
+            onAlert: this.handleDownVoteAlert,
+        });
+    }
+
+    handleDownVoteAlert = () => {
+        console.log('ALERT!');
+    }
+
     handleClick = () => {
         firebaseUtils.downVote({
-            db: firebase.database(),
+            db: this.db,
             meetingId: this.props.meetingId,
             onSuccess: () => this.setState({ canDownVote: false }),
             onFailure: () => console.log('failed to downvote')
