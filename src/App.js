@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import styled from 'styled-components';
+import * as firebase from 'firebase';
+import JoinMeeting from './JoinMeeting';
+import { orange } from './colors';
+import * as firebaseUtils from './firebaseUtils';
+import ThatsEnoughButton from './ThatsEnoughButton';
 
 const AppContainer = styled.div`
   display: flex;
@@ -10,8 +15,6 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-
-const orange = '#ff9224';
 const StyledHeader = styled.div`
   width: 100%;
   background-color: ${orange};
@@ -34,67 +37,38 @@ const MeetingInputText = styled.div`
   margin: 0 auto;
 `;
 
-const StyledInput = styled.input`
-  border-style: solid;
-  border-width: 1px;
-  height: 30px;
-  border-radius: 2px;
-  margin-right: 10px;
-  display: inline-block;
-  text-align: center;
-  box-sizing: border-box;
-`;
-
-const SubmitButton = styled.button`
-  width: 60px;
-  height: 30px;
-  border-style: solid;
-  border-width: 1px;
-  background-color: white;
-  border-radius: 3px;
-  display: inline-block;
-  box-sizing: border-box;
-  color: black;
-  cursor: pointer;
-
-  :hover {
-    background-color: ${orange};
-    color: white;
-  }
-`;
-
-const InputContainer = styled.div`
- display: block;
-`;
-
 class App extends Component {
 
   state = {
-    meetingCode: null,
+    meetingId: null,
   };
 
-  handleSubmitClick() {
-    console.log('hello');
+  db = firebase.database();
+
+  handleMeetingJoined = ({ meetingId }) => {
+    this.setState({ meetingId });
   }
 
-  maybeRenderMeetingInput() {
-    if (!this.state.meetingCode) {
-      return (
-        <div>
-          <InputContainer>
-            <StyledInput placeholder="meeting code"/>
-            <SubmitButton onClick={this.handleSubmitClick}>submit</SubmitButton>
-          </InputContainer>
-        </div>
-      );
+  renderJoinMeeting() {
+    if (!this.state.meetingId) {
+      return <JoinMeeting onMeetingJoined={this.handleMeetingJoined}/>
     }
   }
+
+  renderThatsEnoughButton() {
+    return <ThatsEnoughButton meetingId={this.state.meetingId} />
+  }
+
   render() {
     return (
       <AppContainer>
         <StyledHeader>That's Enough.</StyledHeader>
         <AppBodyContainer>
-          {this.maybeRenderMeetingInput()}
+          {
+            this.state.meetingId
+              ? this.renderThatsEnoughButton()
+              : this.renderJoinMeeting()
+          }
         </AppBodyContainer>
       </AppContainer>
     );
