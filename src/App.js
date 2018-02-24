@@ -1,6 +1,7 @@
+import './globalStyles.css';
 import { getCookie, setCookie } from './cookie';
 import { MEETING_ID_COOKIE } from './constants';
-import { orange } from './colors';
+import { mint, orange } from './colors';
 import * as firebase from 'firebase';
 import JoinMeeting from './JoinMeeting';
 import React, { Component } from 'react';
@@ -10,25 +11,23 @@ import ThatsEnoughView from './ThatsEnoughView';
 const AppContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   flex-flow: column;
   height: 100vh;
 `;
 
-const StyledHeader = styled.div`
-  width: 100%;
-  background-color: ${orange};
-  color: white;
-  height: 80px;
-  font-size: 1.5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const StaleHeader = styled.div`
+  font-family: Arial Black, Arial Bold, Gadget, sans-serif;
+  color: ${mint};
+  font-size: 80px;
+  margin-top: 9%;
+  margin-left: 9%;
+  text-shadow: -1px 0 ${mint}, 0 1px ${mint}, 1px 0 ${mint}, 0 -1px ${mint};
 `;
 
 const AppBodyContainer = styled.div`
   flex-grow: 1;
-  margin: 20px auto;
+  margin-left: 9%;
 `;
 
 class App extends Component {
@@ -61,7 +60,7 @@ class App extends Component {
   render() {
     return (
       <AppContainer>
-        <StyledHeader>That's Enough.</StyledHeader>
+        <StaleHeader>Stale</StaleHeader>
         <AppBodyContainer>
           {
             this.state.meetingId

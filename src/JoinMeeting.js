@@ -1,4 +1,4 @@
-import { orange } from './colors';
+import { mint, orange } from './colors';
 import * as  firebaseUtils from './firebaseUtils.js';
 import * as firebase from 'firebase';
 import PropTypes from 'prop-types';
@@ -6,34 +6,37 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const InputContainer = styled.div`
- display: block;
+    display: block;
 `;
 
 const StyledInput = styled.input`
   border-style: solid;
   border-width: 1px;
   height: 30px;
-  border-radius: 2px;
+  border-radius: 3px;
+  border-color: ${mint};
   margin-right: 10px;
   display: inline-block;
   text-align: center;
   box-sizing: border-box;
+  width: 147px;
 `;
 
 const SubmitButton = styled.button`
-  width: 60px;
+  width: 70px;
   height: 30px;
   border-style: solid;
   border-width: 1px;
   background-color: white;
   border-radius: 3px;
+  border-color: ${mint};
   display: inline-block;
   box-sizing: border-box;
   color: black;
   cursor: pointer;
 
   :hover {
-    background-color: ${orange};
+    background-color: ${mint};
     color: white;
   }
 `;
