@@ -19,6 +19,11 @@ const DownVoteButton = styled.button`
     width: 90vw;
     max-width: 500px;
     max-height: 223px;
+
+    :hover {
+        background-color: white;
+        color: ${red};
+    }
 `;
 
 const LeaveMeetingButton = styled.button`
@@ -33,6 +38,12 @@ const LeaveMeetingButton = styled.button`
     width: 90vw;
     max-width: 500px;
     max-height: 223px;
+    margin: 10px;
+
+    :hover {
+        background-color: white;
+        color: ${red};
+    }
 `;
 
 const DownVoteSubmitted = styled.div`
@@ -103,8 +114,17 @@ class ThatsEnoughView extends Component {
     }
 
     handleLeaveMeetingButtonClick = () => {
-        deleteCookie(MEETING_ID_COOKIE);
-        window.location.reload(false);
+        const onMemberDecrementSuccess = () => {
+            deleteCookie(MEETING_ID_COOKIE);
+            window.location.reload(false);
+        };
+
+        firebaseUtils.decrementMemberCount({
+            db: this.db,
+            meetingId: this.props.meetingId,
+            onSuccess: onMemberDecrementSuccess,
+            onFailure: () => console.log('failed to decrement member count'),
+        })
     }
 
     maybeRenderMoveOnMessage() {
