@@ -1,3 +1,5 @@
+import { getCookie, setCookie } from './cookie';
+import { MEETING_ID_COOKIE } from './constants';
 import { orange } from './colors';
 import * as firebase from 'firebase';
 import JoinMeeting from './JoinMeeting';
@@ -37,7 +39,12 @@ class App extends Component {
 
   db = firebase.database();
 
+  componentDidMount() {
+    this.setState({ meetingId: getCookie(MEETING_ID_COOKIE) });
+  }
+
   handleMeetingJoined = ({ meetingId }) => {
+    setCookie(MEETING_ID_COOKIE, meetingId);
     this.setState({ meetingId });
   }
 

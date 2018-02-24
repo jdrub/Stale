@@ -1,3 +1,5 @@
+import { deleteCookie } from './cookie';
+import { MEETING_ID_COOKIE } from './constants';
 import { red } from './colors';
 import * as  firebaseUtils from './firebaseUtils.js';
 import * as firebase from 'firebase';
@@ -17,9 +19,20 @@ const DownVoteButton = styled.button`
     width: 90vw;
     max-width: 500px;
     max-height: 223px;
+`;
 
-    animation-name: flashBackground;
-    animation-duration: 1s;
+const LeaveMeetingButton = styled.button`
+    border-radius: 5px;
+    font-size: 2em;
+    cursor: pointer;
+
+    background-color: ${red};
+    color: white;
+
+    height: 40vw;
+    width: 90vw;
+    max-width: 500px;
+    max-height: 223px;
 `;
 
 const DownVoteSubmitted = styled.div`
@@ -31,8 +44,6 @@ const DownVoteSubmitted = styled.div`
     max-width: 500px;
     max-height: 223px;
     text-decoration: underline;
-    animation-name: flashBackground;
-    animation-duration: 1s;
 `;
 
 const MoveOnText = styled.div`
@@ -91,6 +102,11 @@ class ThatsEnoughView extends Component {
         });
     }
 
+    handleLeaveMeetingButtonClick = () => {
+        deleteCookie(MEETING_ID_COOKIE);
+        window.location.reload(false);
+    }
+
     maybeRenderMoveOnMessage() {
         if (this.state.shouldMoveOn) {
             return <MoveOnText>The meeting has voted to move on</MoveOnText>
@@ -105,6 +121,7 @@ class ThatsEnoughView extends Component {
                     ? (<DownVoteButton onClick={this.handleClick}>Let's Move On, Please.</DownVoteButton>)
                     : (<DownVoteSubmitted>Enough is Enough.</DownVoteSubmitted>)}
                 {this.maybeRenderMoveOnMessage()}
+                <LeaveMeetingButton onClick={this.handleLeaveMeetingButtonClick}>Leave Meeting</LeaveMeetingButton>
             </div>
         );
     }

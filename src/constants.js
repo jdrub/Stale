@@ -1,0 +1,1 @@
+export const MEETING_ID_COOKIE = 'meeting_id';
