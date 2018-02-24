@@ -13,6 +13,9 @@ export function setCookie(name, value) {
 function getCookies() {
     return Object.assign(
         ...document.cookie.split(';').map(cookieString => {
+            if(!cookieString) {
+                return {};
+            }
             let kv = cookieString.split('=');
             return { [kv[0].trim()]: kv[1].trim() }
         })
