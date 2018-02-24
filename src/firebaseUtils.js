@@ -49,6 +49,18 @@ export function listenForDownVoteAlert({
     });
 }
 
+export function listenForMemberCount({
+    db,
+    meetingId,
+    onMemberCountUpdated,
+}) {
+    const meetingMemberCountRef = db.ref(`meetings/${meetingId}/memberCount`);
+    meetingMemberCountRef.on('value', (memberCountSnapshot) => {
+        const memberCount = memberCountSnapshot.val();
+        onMemberCountUpdated(memberCount);
+    });
+}
+
 function incrementMemberCountOperation(meeting) {
     if (meeting) {
         meeting.memberCount = (meeting.memberCount || 0) + 1;

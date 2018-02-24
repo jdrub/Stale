@@ -71,6 +71,7 @@ class ThatsEnoughView extends Component {
     state = {
         canDownVote: true,
         shouldMoveOn: false,
+        memberCount: 1,
     };
 
     db = firebase.database();
@@ -86,7 +87,12 @@ class ThatsEnoughView extends Component {
             thresholdDownVotePercentage: 50,
             onAlert: this.handleDownVoteAlert,
         });
-        
+
+        firebaseUtils.listenForMemberCount({
+            db: this.db,
+            meetingId: this.props.meetingId,
+            onMemberCountUpdated: (memberCount) => this.setState({ memberCount }),
+        });
     }
 
     handleDownVoteAlert = () => {
@@ -141,6 +147,7 @@ class ThatsEnoughView extends Component {
                     : (<DownVoteSubmitted>Enough is Enough.</DownVoteSubmitted>)}
                 {this.maybeRenderMoveOnMessage()}
                 <LeaveMeetingButton onClick={this.handleLeaveMeetingButtonClick}>Leave Meeting</LeaveMeetingButton>
+                <div>members: {this.state.memberCount}</div>
             </div>
         );
     }
