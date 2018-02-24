@@ -47,7 +47,7 @@ class JoinMeeting extends Component {
     db = firebase.database();
 
     handlemeetingIdChange = (e) => {
-        this.setState({ meetingId: e.target.value });
+        this.setState({ meetingId: e.target.value.trim().toLowerCase() });
     }
 
     handleSubmitClick = () => {

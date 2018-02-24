@@ -134,7 +134,6 @@ class ThatsEnoughView extends Component {
     }
 
     render() {
-        
         return(
             <div>
                 {this.state.canDownVote && !this.state.shouldMoveOn
