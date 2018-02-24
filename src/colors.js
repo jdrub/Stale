@@ -1,3 +1,4 @@
-export const orange = '#ffc000';
-export const mint = '#77f3bb';
-export const red = '#ED224A';
+export const orange = '#FF8552';
+export const mint = '#77F3BB';
+export const lightGrey = '#FFF8F0';
+export const salmon = '#FFA69E';

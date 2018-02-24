@@ -1,6 +1,6 @@
 import { deleteCookie } from './cookie';
 import { MEETING_ID_COOKIE } from './constants';
-import { red } from './colors';
+import { salmon, orange, lightGrey } from './colors';
 import * as  firebaseUtils from './firebaseUtils.js';
 import * as firebase from 'firebase';
 import PropTypes from 'prop-types';
@@ -12,7 +12,7 @@ const DownVoteButton = styled.button`
     font-size: 2em;
     cursor: pointer;
 
-    background-color: ${red};
+    background-color: ${salmon};
     color: white;
 
     height: 40vw;
@@ -20,35 +20,34 @@ const DownVoteButton = styled.button`
     max-width: 500px;
     max-height: 223px;
 
+    margin-top: 50px;
     :hover {
         background-color: white;
-        color: ${red};
+        color: ${salmon};
     }
 `;
 
 const LeaveMeetingButton = styled.button`
-    border-radius: 5px;
-    font-size: 2em;
+    border: none;
+    background-color: rgba(255,255,255,0);
+    border-width: 2px;
+    border-style: solid;
     cursor: pointer;
-
-    background-color: ${red};
-    color: white;
-
-    height: 40vw;
-    width: 90vw;
-    max-width: 500px;
-    max-height: 223px;
-    margin: 10px;
+    font-family: sans-serif;
+    font-size: 17px;
+    color: ${lightGrey};
+    border-radius: 3px;
 
     :hover {
-        background-color: white;
-        color: ${red};
+        background-color: ${lightGrey};
+        border-color: ${lightGrey};
+        color: ${salmon};
     }
 `;
 
 const DownVoteSubmitted = styled.div`
     font-size: 2em;
-    color: ${red};
+    color: ${salmon};
     text-align: center;
     height: 40vw;
     width: 90vw;
@@ -58,10 +57,30 @@ const DownVoteSubmitted = styled.div`
 `;
 
 const MoveOnText = styled.div`
-    color: ${red};
+    color: ${salmon};
     font-size: 3em;
     width: 100%;
     text-align: center;
+`;
+
+const MeetingText = styled.span`
+    color: ${lightGrey};
+`
+
+const MeetingId = styled.div`
+    font-family: Arial Black, Arial Bold, Gadget, sans-serif;
+    font-size: 20px;
+    color: ${salmon};
+`;
+
+const MembersText = styled.span`
+    color: ${lightGrey};
+`;
+
+const MeetingMembers = styled.div`
+    font-family: Arial Black, Arial Bold, Gadget, sans-serif;
+    font-size: 20px;
+    color: ${salmon};
 `;
 
 const canVibrate = () => "vibrate" in navigator || "mozVibrate" in navigator;
@@ -142,11 +161,19 @@ class ThatsEnoughView extends Component {
     render() {
         return(
             <div>
+                <div>
+                    <MeetingId>
+                        <MeetingText>Meeting </MeetingText>{this.props.meetingId}
+                    </MeetingId>
+                    <MeetingMembers>
+                        <MembersText>Members </MembersText>{this.state.memberCount}
+                    </MeetingMembers>
+                    <LeaveMeetingButton onClick={this.handleLeaveMeetingButtonClick}>Leave</LeaveMeetingButton>
+                </div>
                 {this.state.canDownVote && !this.state.shouldMoveOn
                     ? (<DownVoteButton onClick={this.handleClick}>Let's Move On, Please.</DownVoteButton>)
                     : (<DownVoteSubmitted>Enough is Enough.</DownVoteSubmitted>)}
                 {this.maybeRenderMoveOnMessage()}
-                <LeaveMeetingButton onClick={this.handleLeaveMeetingButtonClick}>Leave Meeting</LeaveMeetingButton>
                 <div>members: {this.state.memberCount}</div>
             </div>
         );
