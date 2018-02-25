@@ -13,7 +13,6 @@ const AppContainer = styled.div`
   justify-content: center;
   align-items: left;
   flex-flow: column;
-  height: 100vh;
 `;
 
 const StaleHeader = styled.div`
