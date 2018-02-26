@@ -19,10 +19,10 @@ const DownVoteButton = styled.img`
     margin-top: 40px;
 
     transition: transform .5s ease-in-out;
-    transform: rotate(180deg);
+    transform: rotate(${p => p.rotation || 180}deg);
 
     :hover {
-        transform: rotate(360deg);
+        transform: rotate(${p => p.rotation || 360}deg);
     }
 `;
 
@@ -129,12 +129,13 @@ class ThatsEnoughView extends Component {
         }), 5000);
     }
 
-    handleClick = () => {
+    handleDownVoteClick = () => {
+        this.setState({ canDownVote: false })
         firebaseUtils.downVote({
             db: this.db,
             meetingId: this.props.meetingId,
-            onSuccess: () => this.setState({ canDownVote: false }),
-            onFailure: () => console.log('failed to downvote')
+            onSuccess: () => {},
+            onFailure: () => { this.setState({ canDownVote: true }); console.log('failed to downvote'); },
         });
     }
 
@@ -159,9 +160,10 @@ class ThatsEnoughView extends Component {
     }
 
     renderDownVoteButton() {
+        const rotation = this.state.canDownVote ? undefined : 720;
         return (
             <div>
-                <DownVoteButton src={PotatoChips} onClick={this.handleClick} />
+                <DownVoteButton src={PotatoChips} onClick={this.handleDownVoteClick} rotation={rotation} />
             </div>
         );
     }
@@ -178,7 +180,7 @@ class ThatsEnoughView extends Component {
                     </MeetingMembers>
                     <LeaveMeetingButton onClick={this.handleLeaveMeetingButtonClick}>Leave</LeaveMeetingButton>
                 </div>
-                {this.state.canDownVote && !this.state.shouldMoveOn
+                {!this.state.shouldMoveOn
                     ? this.renderDownVoteButton()
                     : (<DownVoteSubmitted>Enough is Enough.</DownVoteSubmitted>)}
                 {this.maybeRenderMoveOnMessage()}
