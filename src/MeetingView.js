@@ -85,7 +85,7 @@ const MeetingMembers = styled.div`
 
 const canVibrate = () => "vibrate" in navigator || "mozVibrate" in navigator;
 
-class ThatsEnoughView extends Component {
+class MeetingView extends Component {
 
     state = {
         canDownVote: true,
@@ -189,8 +189,8 @@ class ThatsEnoughView extends Component {
     }
 }
 
-ThatsEnoughView.propTypes = {
+MeetingView.propTypes = {
     meetingId: PropTypes.string.isRequired,
 };
 
-export default ThatsEnoughView;
+export default MeetingView;
