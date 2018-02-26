@@ -6,25 +6,59 @@ import * as firebase from 'firebase';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PotatoChips from './images/potato_chips.svg';
 
-const DownVoteButton = styled.button`
-    border-radius: 5px;
-    font-size: 2em;
+const DownVoteButtonOverlay = styled.div`
+    background-color: white;
+    opacity: 0.6;
+
+    width: 22vh;
+    height: 22vh;
+    position: absolute;
+    margin-top: 40px;
+    padding: 10px;
+
+    border-width: 5px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    font-family: Arial Black,Arial Bold,Gadget,sans-serif;
+    font-size: 20px;
+
     cursor: pointer;
 
-    background-color: ${salmon};
-    color: white;
+    z-index: 1;
 
-    height: 40vw;
-    width: 90vw;
-    max-width: 500px;
-    max-height: 223px;
+    transition: opacity .2s ease-in-out;
 
-    margin-top: 50px;
     :hover {
-        background-color: white;
-        color: ${salmon};
+        opacity: 0;
+
+        + img {
+            transform: rotate(360deg);
+        }
     }
+`;
+
+const DownVoteButton = styled.img`
+    width: 22vh;
+    padding: 10px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #FF8552;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: 40px;
+
+    transition: transform .5s ease-in-out;
+    transform: rotate(180deg);
 `;
 
 const LeaveMeetingButton = styled.button`
@@ -37,6 +71,7 @@ const LeaveMeetingButton = styled.button`
     font-size: 17px;
     color: ${lightGrey};
     border-radius: 3px;
+    margin-top: 10px;
 
     :hover {
         background-color: ${lightGrey};
@@ -158,6 +193,15 @@ class ThatsEnoughView extends Component {
         }
     }
 
+    renderDownVoteButton() {
+        return (
+            <div>
+                <DownVoteButtonOverlay>Gone Stale</DownVoteButtonOverlay>
+                <DownVoteButton src={PotatoChips} onClick={this.handleClick} />
+            </div>
+        );
+    }
+
     render() {
         return(
             <div>
@@ -171,10 +215,9 @@ class ThatsEnoughView extends Component {
                     <LeaveMeetingButton onClick={this.handleLeaveMeetingButtonClick}>Leave</LeaveMeetingButton>
                 </div>
                 {this.state.canDownVote && !this.state.shouldMoveOn
-                    ? (<DownVoteButton onClick={this.handleClick}>Let's Move On, Please.</DownVoteButton>)
+                    ? this.renderDownVoteButton()
                     : (<DownVoteSubmitted>Enough is Enough.</DownVoteSubmitted>)}
                 {this.maybeRenderMoveOnMessage()}
-                <div>members: {this.state.memberCount}</div>
             </div>
         );
     }
