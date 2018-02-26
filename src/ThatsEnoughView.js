@@ -8,45 +8,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PotatoChips from './images/potato_chips.svg';
 
-const DownVoteButtonOverlay = styled.div`
-    background-color: white;
-    opacity: 0.6;
-
-    width: 22vh;
-    height: 22vh;
-    position: absolute;
-    margin-top: 40px;
-    padding: 10px;
-
-    border-width: 5px;
-    border-style: solid;
-    border-color: white;
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    font-family: Arial Black,Arial Bold,Gadget,sans-serif;
-    font-size: 20px;
-
-    cursor: pointer;
-
-    z-index: 1;
-
-    transition: opacity .2s ease-in-out;
-
-    :hover {
-        opacity: 0;
-
-        + img {
-            transform: rotate(360deg);
-        }
-    }
-`;
-
 const DownVoteButton = styled.img`
     width: 22vh;
     padding: 10px;
@@ -59,6 +20,10 @@ const DownVoteButton = styled.img`
 
     transition: transform .5s ease-in-out;
     transform: rotate(180deg);
+
+    :hover {
+        transform: rotate(360deg);
+    }
 `;
 
 const LeaveMeetingButton = styled.button`
@@ -196,7 +161,6 @@ class ThatsEnoughView extends Component {
     renderDownVoteButton() {
         return (
             <div>
-                <DownVoteButtonOverlay>Gone Stale</DownVoteButtonOverlay>
                 <DownVoteButton src={PotatoChips} onClick={this.handleClick} />
             </div>
         );
