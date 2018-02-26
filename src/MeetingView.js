@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import PotatoChips from './images/potato_chips.svg';
 
 const DownVoteButton = styled.img`
-    width: 22vh;
+    width: 16vh;
     padding: 10px;
     border-style: solid;
     border-width: 5px;
